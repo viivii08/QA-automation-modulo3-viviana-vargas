@@ -4,7 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class InventoryPage:
-    # Localizadores
     TITULO = (By.CLASS_NAME, "title")
     SELECT_ORDEN = (By.CLASS_NAME, "product_sort_container")
     PRECIOS = (By.CLASS_NAME, "inventory_item_price")
@@ -29,7 +28,6 @@ class InventoryPage:
         return select.first_selected_option.text
 
     def obtener_precios(self):
-        # Los precios vienen como texto "$7.99", se saca el $ y se pasan a numero
         elementos = self.driver.find_elements(*self.PRECIOS)
         return [float(e.text.replace("$", "")) for e in elementos]
 
@@ -37,21 +35,16 @@ class InventoryPage:
         return [e.text for e in self.driver.find_elements(*self.NOMBRES)]
 
     def agregar_todos_al_carrito(self):
-        # Al hacer clic, el boton pasa a decir "Remove", por eso se busca
-        # de nuevo cada vez el primer boton "Add to cart" que quede
         botones = self.driver.find_elements(*self.BOTONES_AGREGAR)
         while botones:
             botones[0].click()
             botones = self.driver.find_elements(*self.BOTONES_AGREGAR)
 
     def agregar_producto(self, nombre):
-        # El id del boton se arma con el nombre del producto:
-        # "Sauce Labs Backpack" -> "add-to-cart-sauce-labs-backpack"
         id_boton = "add-to-cart-" + nombre.lower().replace(" ", "-")
         self.wait.until(EC.element_to_be_clickable((By.ID, id_boton))).click()
 
     def obtener_cantidad_carrito(self):
-        # Si el carrito esta vacio, el numerito no aparece en la pagina
         badges = self.driver.find_elements(*self.BADGE_CARRITO)
         return int(badges[0].text) if badges else 0
 

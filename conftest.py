@@ -29,7 +29,7 @@ def driver(request):
     driver.quit()
 
 
-# Si un test falla, se saca una captura de pantalla y se agrega al reporte HTML
+
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield

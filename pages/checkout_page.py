@@ -5,7 +5,6 @@ from selenium.common.exceptions import TimeoutException
 
 
 class CheckoutPage:
-    # Localizadores
     INPUT_NOMBRE = (By.ID, "first-name")
     INPUT_APELLIDO = (By.ID, "last-name")
     INPUT_CODIGO_POSTAL = (By.ID, "postal-code")
@@ -40,7 +39,6 @@ class CheckoutPage:
         self.ingresar_codigo_postal(codigo_postal)
 
     def esta_en_pantalla(self, titulo):
-        # Espera hasta que el titulo de la pagina sea el indicado (maximo 10 segundos)
         try:
             self.wait.until(EC.text_to_be_present_in_element(self.TITULO, titulo))
             return True

@@ -4,7 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class CartPage:
-    # Localizadores
     TITULO = (By.CLASS_NAME, "title")
     NOMBRES = (By.CSS_SELECTOR, ".cart_item .inventory_item_name")
     BADGE_CARRITO = (By.CLASS_NAME, "shopping_cart_badge")
@@ -22,15 +21,12 @@ class CartPage:
         return [e.text for e in self.driver.find_elements(*self.NOMBRES)]
 
     def obtener_cantidad_carrito(self):
-        # Si el carrito esta vacio, el numerito no aparece en la pagina
         badges = self.driver.find_elements(*self.BADGE_CARRITO)
         return int(badges[0].text) if badges else 0
 
     def remover_producto(self, nombre):
-        # "Sauce Labs Backpack" -> "remove-sauce-labs-backpack"
         id_boton = "remove-" + nombre.lower().replace(" ", "-")
         self.wait.until(EC.element_to_be_clickable((By.ID, id_boton))).click()
-        # Se espera a que el producto desaparezca de la lista
         self.wait.until(EC.invisibility_of_element_located((By.ID, id_boton)))
 
     def continuar_comprando(self):

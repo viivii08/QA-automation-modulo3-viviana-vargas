@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 class LoginPage:
     URL = "https://www.saucedemo.com/"
 
-    # Localizadores
     INPUT_USUARIO = (By.ID, "user-name")
     INPUT_PASSWORD = (By.ID, "password")
     BOTON_LOGIN = (By.ID, "login-button")
