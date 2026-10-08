@@ -44,8 +44,16 @@ class InventoryPage:
             botones[0].click()
             botones = self.driver.find_elements(*self.BOTONES_AGREGAR)
 
+    def agregar_producto(self, nombre):
+        # El id del boton se arma con el nombre del producto:
+        # "Sauce Labs Backpack" -> "add-to-cart-sauce-labs-backpack"
+        id_boton = "add-to-cart-" + nombre.lower().replace(" ", "-")
+        self.wait.until(EC.element_to_be_clickable((By.ID, id_boton))).click()
+
     def obtener_cantidad_carrito(self):
-        return int(self.driver.find_element(*self.BADGE_CARRITO).text)
+        # Si el carrito esta vacio, el numerito no aparece en la pagina
+        badges = self.driver.find_elements(*self.BADGE_CARRITO)
+        return int(badges[0].text) if badges else 0
 
     def ir_al_carrito(self):
         self.driver.find_element(*self.LINK_CARRITO).click()

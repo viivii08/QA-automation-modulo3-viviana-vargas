@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class CheckoutPage:
@@ -10,6 +11,9 @@ class CheckoutPage:
     INPUT_CODIGO_POSTAL = (By.ID, "postal-code")
     BOTON_CONTINUE = (By.ID, "continue")
     MENSAJE_ERROR = (By.CSS_SELECTOR, "[data-test='error']")
+    TITULO = (By.CLASS_NAME, "title")
+    BOTON_FINISH = (By.ID, "finish")
+    MENSAJE_CONFIRMACION = (By.CLASS_NAME, "complete-header")
 
     def __init__(self, driver):
         self.driver = driver
@@ -29,3 +33,22 @@ class CheckoutPage:
 
     def obtener_error(self):
         return self.wait.until(EC.visibility_of_element_located(self.MENSAJE_ERROR)).text
+
+    def completar_datos(self, nombre, apellido, codigo_postal):
+        self.ingresar_nombre(nombre)
+        self.ingresar_apellido(apellido)
+        self.ingresar_codigo_postal(codigo_postal)
+
+    def esta_en_pantalla(self, titulo):
+        # Espera hasta que el titulo de la pagina sea el indicado (maximo 10 segundos)
+        try:
+            self.wait.until(EC.text_to_be_present_in_element(self.TITULO, titulo))
+            return True
+        except TimeoutException:
+            return False
+
+    def finalizar_compra(self):
+        self.wait.until(EC.element_to_be_clickable(self.BOTON_FINISH)).click()
+
+    def obtener_mensaje_confirmacion(self):
+        return self.wait.until(EC.visibility_of_element_located(self.MENSAJE_CONFIRMACION)).text
