@@ -44,3 +44,15 @@ Pruebas automatizadas con Python y pytest:
     pytest --headless           # Sin abrir la ventana del navegador
 
 Al terminar, el reporte queda en `reports/reporte.html`. Si un test de UI falla, el reporte incluye una captura de pantalla del momento del error.
+
+## Ejercicios de Python
+
+| Punto | Descripción | Archivo |
+|---|---|---|
+| Punto 1 | Dado un número, indica si es primo o no | `ejercicios/punto1.py` |
+| Punto 2 | Dados a, b y c, calcula las raíces de una ecuación cuadrática | `ejercicios/punto2.py` |
+
+Para ejecutarlos:
+
+    python3 ejercicios/punto1.py
+    python3 ejercicios/punto2.py
