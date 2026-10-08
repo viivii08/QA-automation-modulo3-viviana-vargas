@@ -46,4 +46,4 @@ def pytest_runtest_makereport(item, call):
 
 
 def pytest_html_report_title(report):
-    report.title = "Reporte de ejecucion - Saucedemo"
+    report.title = "Reporte de ejecucion - Trabajo Integrador Modulo 3"
