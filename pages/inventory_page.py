@@ -8,6 +8,10 @@ class InventoryPage:
     TITULO = (By.CLASS_NAME, "title")
     SELECT_ORDEN = (By.CLASS_NAME, "product_sort_container")
     PRECIOS = (By.CLASS_NAME, "inventory_item_price")
+    NOMBRES = (By.CLASS_NAME, "inventory_item_name")
+    BOTONES_AGREGAR = (By.CSS_SELECTOR, "button[id^='add-to-cart']")
+    BADGE_CARRITO = (By.CLASS_NAME, "shopping_cart_badge")
+    LINK_CARRITO = (By.CLASS_NAME, "shopping_cart_link")
 
     def __init__(self, driver):
         self.driver = driver
@@ -28,3 +32,20 @@ class InventoryPage:
         # Los precios vienen como texto "$7.99", se saca el $ y se pasan a numero
         elementos = self.driver.find_elements(*self.PRECIOS)
         return [float(e.text.replace("$", "")) for e in elementos]
+
+    def obtener_nombres(self):
+        return [e.text for e in self.driver.find_elements(*self.NOMBRES)]
+
+    def agregar_todos_al_carrito(self):
+        # Al hacer clic, el boton pasa a decir "Remove", por eso se busca
+        # de nuevo cada vez el primer boton "Add to cart" que quede
+        botones = self.driver.find_elements(*self.BOTONES_AGREGAR)
+        while botones:
+            botones[0].click()
+            botones = self.driver.find_elements(*self.BOTONES_AGREGAR)
+
+    def obtener_cantidad_carrito(self):
+        return int(self.driver.find_element(*self.BADGE_CARRITO).text)
+
+    def ir_al_carrito(self):
+        self.driver.find_element(*self.LINK_CARRITO).click()
