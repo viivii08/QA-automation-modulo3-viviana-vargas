@@ -11,6 +11,9 @@ def es_primo(numero):
     return True
 
 
+print("Bienvenido/a al verificador de numeros primos")
+print("Escribi un numero para saber si es primo, o 'terminar' para salir.")
+
 while True:
     texto = input("Ingrese un numero entero (o 'terminar' para salir): ").strip()
 
