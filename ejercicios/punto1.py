@@ -1,4 +1,3 @@
-
 def es_primo(numero):
     if numero < 2:
         return False
@@ -12,13 +11,20 @@ def es_primo(numero):
     return True
 
 
-try:
-    numero = int(input("Ingrese un numero entero: "))
+while True:
+    texto = input("Ingrese un numero entero (o 'terminar' para salir): ").strip()
 
-    if es_primo(numero):
-        print(f"El numero {numero} es primo")
-    else:
-        print(f"El numero {numero} no es primo")
+    if texto.lower() == "terminar":
+        print("Gracias, que tengas un buen dia")
+        break
 
-except ValueError:
-    print("Error: tiene que ingresar un numero entero")
+    try:
+        numero = int(texto)
+
+        if es_primo(numero):
+            print(f"El numero {numero} es primo")
+        else:
+            print(f"El numero {numero} no es primo")
+
+    except ValueError:
+        print("Error: tiene que ingresar un numero entero")
