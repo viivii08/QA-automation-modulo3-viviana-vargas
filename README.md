@@ -1,46 +1,94 @@
-# TP Integrador - QA Automation (Módulo 3)
+# Trabajo Integrador - QA Automation (Módulo 3)
 
 **Alumna:** Viviana Vargas
 **Curso:** Diplomatura QA Automation - Módulo 3
 
-## Archivos
+Pruebas automatizadas de interfaz web y de API, más dos ejercicios de programación en Python.
 
-| Archivo | Qué contiene |
+## Tecnologías
+
+| Herramienta | Para qué se usa |
 |---|---|
-| `Punto 1.py` | Indica si un número es primo. Se repite hasta escribir `terminar`. |
-| `Punto 2.py` | Calcula las raíces de una ecuación cuadrática. Se repite hasta escribir `terminar`. |
-| `Test_Punto_3_Saucedemo.py` | Casos 1, 2 y 3 sobre https://www.saucedemo.com/ (Selenium) |
-| `Test_Punto_3_Pokeapi.py` | Casos 1, 2 y 3 sobre https://pokeapi.co/api/v2 (requests) |
-| `conftest.py` | Configuración del navegador y del reporte |
-| `reporte_saucedemo.html` | Resultado de las pruebas de Saucedemo |
-| `reporte_pokeapi.html` | Resultado de las pruebas de PokeAPI |
+| Python 3 | Lenguaje de todo el proyecto |
+| Selenium | Automatizar el navegador (pruebas de UI en Saucedemo) |
+| requests | Hacer las consultas a la API (pruebas de PokeAPI) |
+| pytest | Organizar y ejecutar las pruebas |
+| pytest-html | Generar el reporte HTML con los resultados |
+| Git y GitHub | Control de versiones |
 
-## Casos del punto 3
+## Contenido
 
-**Saucedemo**
-1. Ordenar los productos por precio de menor a mayor y verificar el orden.
-2. Agregar todos los productos al carrito y validar los errores de apellido y código postal en el checkout.
-3. Agregar y quitar un producto, agregar dos y completar la compra.
+### Punto 1 y 2: ejercicios de Python
 
-**PokeAPI**
-1. `berry/1`: size 20, soil_dryness 15 y firmness "soft".
-2. `berry/2`: firmness "super-hard", size mayor y soil_dryness igual a berry/1.
-3. `pokemon/pikachu`: experiencia base entre 10 y 1000 y tipo "electric".
+| Punto | Descripción | Archivo |
+|---|---|---|
+| 1 | Indica si un número ingresado es primo o no | `ejercicios/punto1.py` |
+| 2 | Calcula las raíces de una ecuación cuadrática a partir de a, b y c | `ejercicios/punto2.py` |
 
-## Cómo ejecutarlo
+Los dos programas muestran un mensaje de bienvenida, se repiten hasta que el usuario escribe `terminar` y validan los datos ingresados (por ejemplo, si se escriben letras en lugar de números).
 
-Requisitos: Python, Firefox o Chrome, y las librerías `selenium`, `pytest`, `pytest-html` y `requests`.
+### Punto 3: pruebas automatizadas
 
-    pip install selenium pytest pytest-html requests
+**Saucedemo (UI)** - https://www.saucedemo.com/
 
-Ejercicios:
+| Caso | Qué verifica | Archivo |
+|---|---|---|
+| 1 | Login con `standard_user`, ordenar por "Price (low to high)" y comprobar que los precios queden de menor a mayor | `tests/test_ordenar_productos.py` |
+| 2 | Agregar todos los productos al carrito, verificar que estén todos y validar los errores "Last Name is required" y "Postal Code is required" en el checkout | `tests/test_checkout.py` |
+| 3 | Agregar y quitar un producto, verificar el carrito vacío, agregar 2 productos y completar la compra | `tests/test_compra.py` |
 
-    python "Punto 1.py"
-    python "Punto 2.py"
+**PokeAPI (API)** - https://pokeapi.co/api/v2
 
-Pruebas y reportes:
+| Caso | Qué verifica | Archivo |
+|---|---|---|
+| 1 | `berry/1`: size 20, soil_dryness 15 y firmness "soft" | `tests/test_pokeapi.py` |
+| 2 | `berry/2`: firmness "super-hard", size mayor y soil_dryness igual a berry/1 | `tests/test_pokeapi.py` |
+| 3 | `pokemon/pikachu`: experiencia base entre 10 y 1000 y tipo "electric" | `tests/test_pokeapi.py` |
 
-    pytest Test_Punto_3_Saucedemo.py --html=reporte_saucedemo.html --self-contained-html
-    pytest Test_Punto_3_Pokeapi.py --html=reporte_pokeapi.html --self-contained-html
+## Estructura del proyecto
 
-Para usar Chrome en lugar de Firefox, agregar `--browser chrome`.
+    ejercicios/       Puntos 1 y 2
+    pages/            Page Objects: una clase por pantalla de Saucedemo
+    tests/            Casos de prueba de UI y de API
+    reports/          Reporte HTML de la última ejecución
+    conftest.py       Configuración del navegador y del reporte
+    pytest.ini        Configuración de pytest
+    requirements.txt  Librerías necesarias
+
+Las pruebas de Saucedemo usan el patrón **Page Object Model**: cada pantalla (login, productos, carrito y checkout) tiene su propia clase con sus localizadores y acciones, y los tests solo describen los pasos.
+
+## Instalación
+
+Requisitos: Python 3, Git y Firefox (o Chrome).
+
+**Linux**
+
+    git clone https://github.com/viivii08/QA-automation-modulo3-viviana-vargas.git
+    cd QA-automation-modulo3-viviana-vargas
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+
+**Windows (PowerShell)**
+
+    git clone https://github.com/viivii08/QA-automation-modulo3-viviana-vargas.git
+    cd QA-automation-modulo3-viviana-vargas
+    python -m venv venv
+    venv\Scripts\activate
+    pip install -r requirements.txt
+
+## Ejecución
+
+**Pruebas automatizadas**
+
+    pytest                      Todas las pruebas, con Firefox
+    pytest --browser chrome     Con Chrome
+    pytest --headless           Sin abrir la ventana del navegador
+    pytest tests/test_pokeapi.py   Solo las pruebas de API
+
+Al terminar, el reporte queda en `reports/reporte.html`. Si una prueba de UI falla, el reporte incluye una captura de pantalla del momento del error.
+
+**Ejercicios** (en Windows se usa `python` en lugar de `python3`)
+
+    python3 ejercicios/punto1.py
+    python3 ejercicios/punto2.py
