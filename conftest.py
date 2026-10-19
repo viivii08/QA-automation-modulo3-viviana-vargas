@@ -15,6 +15,11 @@ def driver(request):
 
     if navegador == "chrome":
         opciones = webdriver.ChromeOptions()
+        opciones.add_experimental_option("prefs", {
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+            "profile.password_manager_leak_detection": False,
+        })
         if headless:
             opciones.add_argument("--headless=new")
         driver = webdriver.Chrome(options=opciones)
@@ -27,7 +32,6 @@ def driver(request):
     driver.maximize_window()
     yield driver
     driver.quit()
-
 
 
 @pytest.hookimpl(hookwrapper=True)
