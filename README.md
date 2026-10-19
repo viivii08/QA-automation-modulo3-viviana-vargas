@@ -1,4 +1,4 @@
-# Trabajo Integrador - QA Automation (Módulo 3)
+# Trabajo Integrador - QA Automation - Módulo 3 - Viviana Vargas
 
 **Alumna:** Viviana Vargas
 **Curso:** Diplomatura QA Automation - Módulo 3
